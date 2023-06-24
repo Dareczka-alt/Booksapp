@@ -1,5 +1,6 @@
-'use strict';
 {
+  ('use strict');
+
   const templates = {
     bookLink: Handlebars.compile(document.querySelector('#template-book').innerHTML),
   };
@@ -15,11 +16,12 @@
         rating: book.rating,
 
       });
+      console.log('generatedHTML:', generatedHTML);
 
 
-      const listOfBook = document.querySelector('.books-list');
-      const creation = utils.createDOMFromHTML(generatedHTML);
-      listOfBook.appendChild(creation);
+      const listOfBook = document.querySelector('books-list');
+      const elem = utils.createDOMFromHTML(generatedHTML);
+      listOfBook.appendChild(elem);
     }
   }
 
