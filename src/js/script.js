@@ -7,20 +7,22 @@
 
   function render() {
 
-    for (let book in dataSource.books) {
+    for (let bookId in dataSource.books) {
+      bookId = dataSource.books[bookId];
       const generatedHTML = templates.bookLink({
-        id: book.id,
-        name: book.name,
-        price: book.price,
-        image: book.image,
-        rating: book.rating,
+        name: bookId.name,
+        price: bookId.price,
+        image: bookId.image,
+        rating: bookId.rating,
 
       });
       console.log('generatedHTML:', generatedHTML);
 
 
-      const listOfBook = document.querySelector('books-list');
+      const listOfBook = document.querySelector('.books-panel .books-list');
+
       const elem = utils.createDOMFromHTML(generatedHTML);
+      console.log('elem:', elem);
       listOfBook.appendChild(elem);
     }
   }
