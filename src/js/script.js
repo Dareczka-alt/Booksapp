@@ -42,24 +42,28 @@ const favoriteBooks = [];
 
 
 function initAction() {
-  const allImages = document.querySelectorAll(select.containerOf.bookImage);
+  const listOfBook = document.querySelector(select.containerOf.bookList);
+  listOfBook.addEventListener('dblclick', function (event) {
+    event.preventDefault();
+    if (event.target.offsetParent.classList.contains('book__image')) {
 
-  for (let image of allImages) {
-    image.addEventListener('dblclick', function (event) {
-      event.preventDefault();
-      const bookId = image.getAttribute('data-id');
+      const allImages = document.querySelectorAll(select.containerOf.bookImage);
+      for (let image of allImages) {
 
-      if (favoriteBooks.includes(bookId)) {
-        image.classList.remove('favorite');
-        const indexOfBook = favoriteBooks.indexOf(bookId);
-        favoriteBooks.splice(indexOfBook, 1);
+        const bookId = image.getAttribute('data-id');
 
-      } else {
-        image.classList.add('favorite');
-        favoriteBooks.push(bookId);
+        if (!favoriteBooks.includes(bookId)) {
+          image.classList.add('favorite');
+          favoriteBooks.push(bookId);
+
+        } else {
+          const bookIndex = bookId;
+          image.classList.remove('favorite');
+          favoriteBooks.splice(bookIndex, 1);
+        }
       }
-    });
-  }
+    }
+  });
 }
 
 render();
