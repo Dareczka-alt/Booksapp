@@ -1,8 +1,18 @@
 
 ('use strict');
+const select = {
+  templateOf: {
+    book: '#template-book',
+
+  },
+  containerOf: {
+    bookList: '.books-panel .books-list',
+    bookImage: '.book__image',
+  },
+};
 
 const templates = {
-  bookLink: Handlebars.compile(document.querySelector('#template-book').innerHTML),
+  bookLink: Handlebars.compile(document.querySelector(select.templateOf.book).innerHTML),
 };
 
 function render() {
@@ -18,7 +28,7 @@ function render() {
     });
 
 
-    const listOfBook = document.querySelector('.books-panel .books-list');
+    const listOfBook = document.querySelector(select.containerOf.bookList);
 
     const elem = utils.createDOMFromHTML(generatedHTML);
 
@@ -29,23 +39,24 @@ function render() {
 
 
 const favoriteBooks = [];
-console.log(favoriteBooks);
-
-function initActions() {
-  const listOfBook = document.querySelector('.books-panel .books-list');
-
-  const booksImages = listOfBook.querySelectorAll('.book .book_image');
-  console.log(booksImages);
 
 
-  for (let i = 0; i < booksImages.length; i++) {
-    const clickedElement = this;
-    clickedElement.addEventListener('dblclick', function (event) {
+function initAction() {
+  const allImages = document.querySelectorAll(select.containerOf.bookImage);
+
+  for (let image of allImages) {
+    image.addEventListener('dblclick', function (event) {
       event.preventDefault();
-      clickedElement.classList.add('favorite');
+      image.classList.add('favorite');
+
+      const bookId = image.getAttribute('data-id');
+
+
+      favoriteBooks.push(bookId);
+
     });
   }
 }
 
 render();
-initActions();
+initAction();
