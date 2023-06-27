@@ -63,21 +63,29 @@ function initAction() {
 
   });
 
-  const filterOfBooks = document.querySelector(select.containerOf.bookFilter);
-  filterOfBooks.addEventListener('click', function (callback) {
+  const booksFilter = document.querySelector(select.containerOf.bookFilter);
+
+
+  booksFilter.addEventListener('click', function (callback) {
     const clickedElement = callback.target;
-    console.log(clickedElement.value);
 
     if (
       clickedElement.tagName == 'INPUT' &&
       clickedElement.type == 'checkbox' &&
       clickedElement.name == 'filter'
     ) {
-      if (clickedElement.checked) filters.push(clickedElement.value);
-    } else {
-      const indexOfFilter = filters.indexOf(clickedElement.value);
-      filters.splice(indexOfFilter, 1);
+      console.log('clickedElement', clickedElement);
+
+      if (clickedElement.checked) {
+        filters.push(clickedElement.value);
+      } else {
+        const indexOfValue = filters.indexOf(
+          clickedElement.value
+        );
+        filters.splice(indexOfValue, 1);
+      }
     }
+
     filterBooks();
   });
 }
@@ -86,16 +94,14 @@ const filters = [];
 
 function filterBooks() {
 
-
-  for (let bookId of dataSource.books) {
-    bookId = dataSource.books[bookId];
+  for (let book of dataSource.books) {
     let shouldBeHidden = false;
     const filterOfHiddenBooks = document.querySelector(
-      select.containerOf.bookImage + '[data-id = "' + bookId + '"]'
+      select.containerOf.bookImage + '[data-id = "' + book.id + '"]'
     );
 
     for (const filter of filters) {
-      if (!bookId.details[filter]) {
+      if (!book.details[filter]) {
         shouldBeHidden = true;
         break;
       }
@@ -108,6 +114,9 @@ function filterBooks() {
     }
   }
 }
+
+
+
 
 render();
 initAction();
