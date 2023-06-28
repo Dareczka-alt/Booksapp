@@ -27,6 +27,8 @@ class BooksList {
 
 
 
+
+
   render() {
     const thisBooksList = this;
     for (let bookId in dataSource.books) {
@@ -78,9 +80,11 @@ class BooksList {
 
     const booksFilter = document.querySelector(select.containerOf.bookFilter);
 
+    console.log('booksFilter', booksFilter);
 
     booksFilter.addEventListener('click', function (callback) {
       const clickedElement = callback.target;
+      thisBooksList.filters = [];
 
       if (
         clickedElement.tagName == 'INPUT' &&
@@ -103,11 +107,8 @@ class BooksList {
     });
   }
 
-
-
   filterBooks() {
     const thisBooksList = this;
-    thisBooksList.filters = [];
 
     for (let book of dataSource.books) {
       let shouldBeHidden = false;
@@ -129,6 +130,7 @@ class BooksList {
       }
     }
   }
+
   determineRatingBgc(rating) {
     const thisBooksList = this;
     console.log(thisBooksList);
